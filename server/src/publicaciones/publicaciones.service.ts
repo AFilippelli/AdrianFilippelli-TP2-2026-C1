@@ -1,0 +1,89 @@
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Publicacion } from './entities/publicacion.schema';
+import { Model } from 'mongoose';
+import { PublicacionDTO } from './dto/publicacion.dto';
+import { Usuario } from 'src/usuarios/entities/usuario.schema';
+
+@Injectable()
+export class PublicacionesService {
+
+    constructor(
+        @InjectModel(Publicacion.name) private publicacionModel: Model<Publicacion>,
+    ) {}
+
+    async crear(publicacion: PublicacionDTO, usuarioId: string){
+
+        try{
+            
+            const publicacionCreada = await this.publicacionModel.create({
+                ...publicacion,
+                usuario_publicacion: usuarioId,
+            });
+
+            return publicacionCreada;
+
+        } catch{
+            throw new UnauthorizedException();
+        }
+    }
+
+    async listar(){
+
+        try{
+            const publicacionActiva = await this.publicacionModel.find({activa:true});
+
+            return publicacionActiva;
+        }catch{
+            throw new UnauthorizedException();
+        }
+    }
+
+    async eliminar(id: string){
+        try{
+
+            const publicacionBorrada = await this.publicacionModel.updateOne(
+                {_id: id},
+                {activa: false},
+            );
+
+            return publicacionBorrada;
+        }catch{
+            throw new UnauthorizedException();
+        }
+    }
+
+    async darMeGusta(id: string, usuarioId: string){
+        try{
+            const publicacion = await this.publicacionModel.findById(id);
+            
+            if(publicacion?.me_gusta.includes(usuarioId)){
+                throw new BadRequestException('Ya diste me gusta a esta publicación');
+            }
+
+            const nuevoMeGusta = await this.publicacionModel.updateOne(
+                {_id: id},
+                {$push: {me_gusta: usuarioId}},
+            )
+
+            return nuevoMeGusta;
+
+        } catch(error){
+            throw error;
+        }
+    }
+
+    async quitarMeGusta(id:string, usuarioId: string){
+        try{
+            const quitarLike = await this.publicacionModel.updateOne(
+                {_id:id},
+                {$pull: {me_gusta:usuarioId}},
+            )
+
+            return quitarLike;
+
+        }catch{
+            throw new UnauthorizedException();
+        }
+    }
+}
