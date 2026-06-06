@@ -1,0 +1,36 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { ILogin, IRegistro } from '../../auth/auth.interfaces';
+
+@Injectable({
+  providedIn: 'root',
+})
+
+
+export class AuthService {
+
+    http = inject(HttpClient);
+
+
+    registrar(datos: any, foto?: File) {
+        const formData = new FormData();
+        
+        // agrego cada campo del formulario al FormData
+        Object.keys(datos).forEach(key => {
+            if(datos[key] !== null && datos[key] !== undefined) {
+                formData.append(key, datos[key]);
+            }
+        });
+        
+        // si hay foto la agrego
+        if(foto) {
+            formData.append('foto_perfil', foto);
+        }
+        
+        return this.http.post('http://localhost:3000/autenticacion/registro', formData, { responseType: 'text' });
+    }  
+
+    ingresar(datos: ILogin){
+        return this.http.post('http://localhost:3000/autenticacion/ingresar', datos, { responseType: 'text' });
+    }
+}

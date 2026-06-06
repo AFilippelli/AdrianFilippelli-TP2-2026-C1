@@ -1,0 +1,29 @@
+<form [formGroup]="formulario">
+    <div>
+        <label for="email">Email</label>
+        <input name="email" id="email" type="email" formControlName="email" placeholder="email"
+        [className]="formulario.get('email')?.errors !== null &&
+          formulario.get('email')?.touched ? 'error' : ''" 
+        />
+        @if (formulario.get('email')?.errors && formulario.get('email')?.touched) {
+            @if(formulario.get("email")?.getError('email')) {
+              <small class="small-error">El email no es válido</small>
+            }
+        }
+    </div>
+    <div>
+        <label for="password">Contraseña</label>
+        <input name="password" id="password" type="password" formControlName="password" placeholder="password"
+          [className]="formulario.get('password')?.errors !== null &&
+          formulario.get('password')?.touched ? 'error' : ''" 
+        />
+        @if (formulario.get('password')?.errors && formulario.get('password')?.touched) {
+            @if(formulario.get("password")?.getError('pattern')) {
+              <small class="small-error">La contraseña debe tener al menos 8 caracteres, una mayúscula y un número</small>
+            }
+        }
+    </div>
+
+<button type="button" [disabled]="!formulario.valid" (click)="enviar()">Ingresar</button>
+
+</form>
