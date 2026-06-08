@@ -32,7 +32,7 @@ export class Login {
             .subscribe({
                 next: (respuesta) => {
                     // si salió bien, redirigir al login
-                    console.log(respuesta);
+                    localStorage.setItem('token', respuesta);
                     this.router.navigateByUrl('/publicaciones');
                 },
                 error: (error) => {

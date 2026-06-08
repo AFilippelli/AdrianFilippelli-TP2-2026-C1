@@ -3,6 +3,8 @@ import { AutenticacionService } from './autenticacion.service';
 import { UsuarioLoginDTO, UsuarioRegistroDTO } from 'src/usuarios/dto/usuario.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { TokenGuard } from 'src/guards/token.guard';
+import { TokenDTO } from 'src/usuarios/dto/usuario.dto';
 
 @Controller('autenticacion')
 export class AutenticacionController {
@@ -29,14 +31,10 @@ export class AutenticacionController {
     ingresar(@Body() usuario: UsuarioLoginDTO) {
         return this.autenticacionService.ingresar(usuario);
     }
-  /*
-  @Get('/seguro')
-  @UseGuards(TokenGuard)
-  rutaSegura(@Body('emailDelToken') email: any) {
-    console.log(email);
-    // SOLO Voy a poder acceder si tengo unt tóken válido
-
-    return { mensaje: 'Acceso otorgado a ' + email };
-  }
-    */
+  
+    @Get('/perfil')
+    @UseGuards(TokenGuard)
+    obtenerPerfil(@Body() _tokenData: TokenDTO, @Body('_idDelToken') _id: string) {
+        return this.autenticacionService.obtenerPerfil(_id);
+    }
 }

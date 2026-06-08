@@ -52,7 +52,7 @@ export class Registro {
         this.authService.registrar(this.formulario.value, this.fotoSeleccionada ?? undefined)
             .subscribe({
                 next: (respuesta) => {
-                    console.log(respuesta);
+                    localStorage.setItem('token', respuesta);
                     this.router.navigateByUrl('/login');
                 },
                 error: (error) => {

@@ -1,1 +1,21 @@
-<p>publicaciones works!</p>
+<div class="publicaciones">
+
+    <div class="crearPublicacion">
+        <input [(ngModel)]="nuevoTitulo" placeholder="Título" />
+        <textarea [(ngModel)]="nuevoMensaje" placeholder="Mensaje"></textarea>
+        <button (click)="crear()">Publicar</button>
+    </div>
+
+    <div class="listaPublicaciones">
+        @for(elemento of publicaciones(); track elemento._id) {
+            <div class="publicacion">
+                <h2>{{ elemento.titulo }}</h2>
+                <p>{{ elemento.mensaje }}</p>
+                <p>Me gustas: {{ elemento.me_gusta.length }}</p>
+                <button (click)="darMeGusta(elemento._id)">Me gusta</button>
+                <button (click)="quitarMeGusta(elemento._id)">Quitar me gusta</button>
+                <button (click)="eliminar(elemento._id)">Eliminar</button>
+            </div>
+        }
+    </div>
+</div>

@@ -33,4 +33,14 @@ export class AuthService {
     ingresar(datos: ILogin){
         return this.http.post('http://localhost:3000/autenticacion/ingresar', datos, { responseType: 'text' });
     }
+
+    obtenerPerfil() {
+        const headers = { Authorization: `Bearer ${localStorage.getItem('token')}` };
+        return this.http.get('http://localhost:3000/autenticacion/perfil', { headers });
+    }
+
+    obtenerMisPublicaciones() {
+        const headers = { Authorization: `Bearer ${localStorage.getItem('token')}` };
+        return this.http.get('http://localhost:3000/publicaciones/mis-publicaciones', { headers });
+    }
 }

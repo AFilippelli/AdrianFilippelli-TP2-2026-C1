@@ -3,6 +3,7 @@ import { PublicacionesService } from './publicaciones.service';
 import { Publicacion } from './entities/publicacion.schema';
 import { PublicacionDTO } from './dto/publicacion.dto';
 import { TokenGuard } from 'src/guards/token.guard';
+import { TokenDTO } from 'src/usuarios/dto/usuario.dto';
 
 @Controller('publicaciones')
 export class PublicacionesController {
@@ -49,6 +50,12 @@ export class PublicacionesController {
         @Body("_idDelToken") _idUsuario: string
     ){
         return this.publicacionesService.quitarMeGusta(id, _idUsuario);
+    }
+
+    @Get('/mis-publicaciones')
+    @UseGuards(TokenGuard)
+    listarMisPublicaciones(@Body() _tokenData: TokenDTO, @Body('_idDelToken') _id: string) {
+        return this.publicacionesService.listarPorUsuario(_id);
     }
     
 }

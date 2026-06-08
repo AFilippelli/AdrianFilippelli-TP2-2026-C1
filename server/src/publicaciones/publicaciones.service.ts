@@ -39,6 +39,18 @@ export class PublicacionesService {
         }
     }
 
+    async listarPorUsuario(usuarioId: string) {
+        try {
+            const publicaciones = await this.publicacionModel
+                .find({ usuario_publicacion: usuarioId, activa: true })
+                .sort({ _id: -1 })
+                .limit(3);
+            return publicaciones;
+        } catch {
+            throw new UnauthorizedException();
+        }
+    }
+
     async eliminar(id: string){
         try{
 

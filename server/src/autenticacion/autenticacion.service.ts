@@ -87,4 +87,15 @@ export class AutenticacionService {
             throw new UnauthorizedException();
         }
     } 
+
+    async obtenerPerfil(id: string) {
+        try {
+            const usuario = await this.usuarioModel.findById(id).select('-password');
+            return usuario;
+        } catch {
+            throw new UnauthorizedException();
+        }
+    }
+
+    
 }

@@ -1,1 +1,24 @@
-<p>mi-perfil works!</p>
+<div class="mi-perfil">
+
+    @if(datosUsuario()) {
+        <img [src]="datosUsuario().foto_perfil" alt="foto de perfil" />
+        <h2>{{ datosUsuario().nombre }} {{ datosUsuario().apellido }}</h2>
+        <p>Usuario: {{ datosUsuario().nombre_de_usuario }}</p>
+        <p>Email: {{ datosUsuario().email }}</p>
+        <p>Fecha de nacimiento: {{ datosUsuario().fecha_nacimiento | date:'dd/MM/yyyy' }}</p>
+        <p>Descripción: {{ datosUsuario().descripcion_breve }}</p>
+        <p>Perfil: {{ datosUsuario().perfil }}</p>
+    }
+
+    <div class="mis-publicaciones">
+        <h3>Mis últimas publicaciones</h3>
+        @for(pub of misPublicaciones(); track pub._id) {
+            <div class="publicacion">
+                <h4>{{ pub.titulo }}</h4>
+                <p>{{ pub.mensaje }}</p>
+                <p>Me gustas: {{ pub.me_gusta.length }}</p>
+            </div>
+        }
+    </div>
+
+</div>

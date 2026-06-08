@@ -53,3 +53,17 @@ export class UsuarioLoginDTO{
 
 
 }
+
+export class TokenDTO {
+    @IsString()
+    @IsOptional()
+    emailDelToken: string;
+
+    @IsString()
+    @IsOptional()
+    _idDelToken: string;
+
+    @IsString()
+    @IsOptional()
+    email: string;
+}
