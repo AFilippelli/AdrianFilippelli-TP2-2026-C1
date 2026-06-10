@@ -3,8 +3,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UsuarioLoginDTO, UsuarioRegistroDTO } from 'src/usuarios/dto/usuario.dto';
 import { Usuario } from 'src/usuarios/entities/usuario.schema';
-import { sign } from 'jsonwebtoken';
+import { sign, verify } from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
+
 
 
 @Injectable()
@@ -92,6 +93,36 @@ export class AutenticacionService {
         try {
             const usuario = await this.usuarioModel.findById(id).select('-password');
             return usuario;
+        } catch {
+            throw new UnauthorizedException();
+        }
+    }
+
+    async autorizar(token: string) {
+        try {
+            const verificado = verify(token, process.env.CLAVE_SECRETA!) as any;
+            const usuario = await this.usuarioModel.findById(verificado._id).select('-password');
+            return usuario;
+        } catch {
+            throw new UnauthorizedException();
+        }
+    }
+
+    async refrescar(token: string) {
+        try {
+            const verificado = verify(token, process.env.CLAVE_SECRETA!) as any;
+            
+            const payload = {
+                email: verificado.email,
+                _id: verificado._id,
+            };
+
+            const nuevoToken = sign(payload, process.env.CLAVE_SECRETA!, {
+                algorithm: 'HS256',
+                expiresIn: '15 minutes',
+            });
+
+            return nuevoToken;
         } catch {
             throw new UnauthorizedException();
         }

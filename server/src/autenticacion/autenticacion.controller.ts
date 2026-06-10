@@ -37,4 +37,15 @@ export class AutenticacionController {
     obtenerPerfil(@Body() _tokenData: TokenDTO, @Body('_idDelToken') _id: string) {
         return this.autenticacionService.obtenerPerfil(_id);
     }
+
+    @Post('/autorizar')
+    autorizar(@Body('token') token: string) {
+        return this.autenticacionService.autorizar(token);
+    }
+
+    @Post('/refrescar')
+    refrescar(@Body('token') token: string) {
+        return this.autenticacionService.refrescar(token);
+    }
+
 }
