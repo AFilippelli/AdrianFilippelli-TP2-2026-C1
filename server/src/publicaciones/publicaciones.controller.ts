@@ -57,5 +57,14 @@ export class PublicacionesController {
     listarMisPublicaciones(@Body() _tokenData: TokenDTO, @Body('_idDelToken') _id: string) {
         return this.publicacionesService.listarPorUsuario(_id);
     }
+
+    @Get('/:id')
+    @UseGuards(TokenGuard)
+    traerPorId(
+        @Param('id') id: string,
+        @Body() _tokenData: TokenDTO
+    ) {
+        return this.publicacionesService.traerPorId(id);
+    }
     
 }

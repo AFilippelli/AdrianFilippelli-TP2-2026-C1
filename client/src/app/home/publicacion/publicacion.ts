@@ -1,0 +1,83 @@
+import { Component, inject, signal, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { PublicacionesService } from '../../services/publicaciones.service';
+import { ComentariosService } from '../../services/comentarios.service';
+import { FormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+
+@Component({
+  selector: 'app-publicacion',
+  imports: [FormsModule, DatePipe],
+  templateUrl: './publicacion.html',
+  styleUrl: './publicacion.css',
+})
+export class Publicacion implements OnInit {
+
+  route = inject(ActivatedRoute); //id de la url
+  publicacionesService = inject(PublicacionesService);
+  comentariosService = inject(ComentariosService);
+
+  publicacion = signal<any>(null);
+  comentarios = signal<any[]>([]);
+  comentarioEditandoId = signal<string | null>(null);
+
+
+  nuevoComentario = '';   //guarda el texto del nuevo comentario
+  mensajeEditado = '';
+
+  ngOnInit() {
+    const id = this.route.snapshot.params['id']; // obtengo el id de la URL
+    
+    this.publicacionesService.traerPorId(id).subscribe({
+      next: (respuesta: any) => {
+        this.publicacion.set(respuesta);
+      },
+      error: (error) => console.log(error)
+    });
+
+    this.comentariosService.traer(id).subscribe({
+      next: (respuesta: any) => {
+        this.comentarios.set(respuesta);
+      },
+      error: (error) => console.log(error)
+    });
+  }
+
+  agregarComentario() {
+    if(!this.nuevoComentario) return;
+    const id = this.route.snapshot.params['id'];
+    
+    this.comentariosService.agregar(id, this.nuevoComentario).subscribe({
+      next: () => {
+        this.nuevoComentario = '';
+        this.ngOnInit();
+      },
+      error: (error) => console.log(error)
+    });
+  }
+
+  editarComentario(comentario: any) {
+      this.comentarioEditandoId.set(comentario._id);
+      this.mensajeEditado = comentario.mensaje;
+  }
+
+  guardarEdicion() {
+      const id = this.comentarioEditandoId();
+      if(!id || !this.mensajeEditado) return;
+
+      this.comentariosService.modificar(id, this.mensajeEditado).subscribe({
+          next: () => {
+              this.comentarioEditandoId.set(null);
+              this.mensajeEditado = '';
+              this.ngOnInit();
+          },
+          error: (error) => console.log(error)
+      });
+  }
+
+  cancelarEdicion() {
+      this.comentarioEditandoId.set(null);
+      this.mensajeEditado = '';
+  }
+
+}

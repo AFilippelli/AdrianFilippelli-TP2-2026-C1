@@ -1,6 +1,8 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { PublicacionesService } from '../../services/publicaciones.service';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-publicaciones',
@@ -16,6 +18,12 @@ export class Publicaciones implements OnInit {
 
   nuevoTitulo = '';
   nuevoMensaje = '';
+
+  router = inject(Router);
+
+  verPublicacion(id: string) {
+      this.router.navigateByUrl(`/publicacion/${id}`);
+  }
 
     ngOnInit(){
       this.publicacionesService.listar().subscribe({

@@ -98,4 +98,14 @@ export class PublicacionesService {
             throw new UnauthorizedException();
         }
     }
+
+    async traerPorId(id: string) {
+        try {
+            const publicacion = await this.publicacionModel.findById(id);
+            return publicacion;
+        } catch {
+            throw new UnauthorizedException();
+        }
+    }
+
 }

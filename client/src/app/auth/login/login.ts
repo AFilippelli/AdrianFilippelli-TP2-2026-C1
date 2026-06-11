@@ -25,21 +25,22 @@ export class Login {
 
 
 
-      enviar(){
-        if(this.formulario.invalid) return;
-        
-        this.authService.ingresar(this.formulario.value as ILogin)
-            .subscribe({
-                next: (respuesta) => {
-                    // si salió bien, redirigir al login
-                    localStorage.setItem('token', respuesta);
-                    this.router.navigateByUrl('/publicaciones');
-                },
-                error: (error) => {
-                    // si hubo error, mostrar mensaje
-                    console.log(error);
-                }
-            });
-      }
+    enviar(){
+      if(this.formulario.invalid) return;
+      
+      this.authService.ingresar(this.formulario.value as ILogin)
+          .subscribe({
+              next: (respuesta) => {
+                  // si salió bien, redirigir al login
+                  localStorage.setItem('token', respuesta);
+                  this.authService.iniciarContador$.next();
+                  this.router.navigateByUrl('/publicaciones');
+              },
+              error: (error) => {
+                  // si hubo error, mostrar mensaje
+                  console.log(error);
+              }
+          });
+    }
 
 }

@@ -35,4 +35,9 @@ export class PublicacionesService {
         const headers = { Authorization: `Bearer ${localStorage.getItem('token')}` };
         return this.http.delete(`http://localhost:3000/publicaciones/${id}/me-gusta`, { headers });
     }
+
+    traerPorId(id: string) {
+        const headers = { Authorization: `Bearer ${localStorage.getItem('token')}` };
+        return this.http.get(`http://localhost:3000/publicaciones/${id}`, { headers });
+    }
 }
