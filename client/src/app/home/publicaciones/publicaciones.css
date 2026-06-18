@@ -1,0 +1,102 @@
+.publicaciones {
+  max-width: 600px;
+  margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0 16px;
+}
+
+.crearPublicacion {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.crearPublicacion input,
+.crearPublicacion textarea {
+  background: var(--white);
+}
+
+.crearPublicacion textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.crearPublicacion button {
+  align-self: flex-end;
+  padding: 8px 20px;
+}
+
+.listaPublicaciones {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.publicacion {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.publicacion h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.publicacion p {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.publicacion img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.publicacion-botones {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.publicacion button {
+  font-size: 13px;
+  padding: 6px 14px;
+  background-color: var(--surface-dark);
+  color: var(--text);
+}
+
+.publicacion button:hover {
+  background-color: var(--accent);
+  color: var(--white);
+}
+
+.ordenamiento {
+  display: flex;
+  gap: 10px;
+}
+
+.ordenamiento button {
+  background-color: var(--surface-dark);
+  color: var(--text);
+  font-size: 13px;
+}
+
+.ordenamiento button:hover {
+  background-color: var(--accent);
+  color: var(--white);
+}

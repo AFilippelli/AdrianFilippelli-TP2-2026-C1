@@ -1,0 +1,107 @@
+.publicacion-detalle {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.publicacion-detalle .publicacion {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.publicacion-detalle .publicacion h2 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.publicacion-detalle .publicacion p {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.publicacion-detalle .publicacion img {
+  width: 100%;
+  max-height: 350px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.comentarios {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.comentarios h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.agregar-comentario {
+  display: flex;
+  gap: 8px;
+}
+
+.agregar-comentario input {
+  flex: 1;
+}
+
+.agregar-comentario button {
+  white-space: nowrap;
+}
+
+.comentario {
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.comentario p {
+  font-size: 14px;
+  color: var(--text);
+}
+
+.comentario small {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.comentario button {
+  align-self: flex-start;
+  font-size: 12px;
+  padding: 4px 12px;
+  background-color: var(--surface-dark);
+  color: var(--text);
+}
+
+.comentario button:hover {
+  background-color: var(--accent);
+  color: var(--white);
+}
+
+.publicacion-detalle > button {
+  align-self: flex-start;
+  background-color: var(--surface-dark);
+  color: var(--text);
+}
+
+.publicacion-detalle > button:hover {
+  background-color: var(--accent);
+  color: var(--white);
+}

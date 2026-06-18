@@ -1,0 +1,65 @@
+.mi-perfil {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mi-perfil img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border);
+}
+
+.mi-perfil h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.mi-perfil p {
+  font-size: 14px;
+  color: var(--text-muted);
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.mis-publicaciones {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mis-publicaciones h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.mis-publicaciones .publicacion {
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mis-publicaciones .publicacion h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.mis-publicaciones .publicacion p {
+  font-size: 13px;
+  color: var(--text-muted);
+  border-bottom: none;
+}
