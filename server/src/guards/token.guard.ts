@@ -7,19 +7,18 @@ import { Request } from 'express';
 export class TokenGuard implements CanActivate{
 
 
-    canActivate(
-    context: ExecutionContext,
+  canActivate(
+  context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
 
 
-    // ¿ Cómo recibo el tóken?
-    const http = context.switchToHttp();
+  const http = context.switchToHttp();
 
-    const req: Request = http.getRequest();
+  const req: Request = http.getRequest();
 
-    const authorization = req.headers.authorization;
+  const authorization = req.headers.authorization;
 
-    const token = authorization?.replace('Bearer ', '') || '';
+  const token = authorization?.replace('Bearer ', '') || '';
 
 
     try {

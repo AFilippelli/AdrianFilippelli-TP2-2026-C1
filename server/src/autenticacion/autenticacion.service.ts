@@ -33,9 +33,10 @@ export class AutenticacionService {
                 foto_perfil: urlFoto,
             }) as any;
 
-            const payload = {
-                email: usuarioCreado.email, 
+            const payload = { //contenido del token
+                email: usuarioCreado.email,
                 _id: usuarioCreado._id,
+                perfil: usuarioCreado.perfil, // agregás esto
             };
 
             const jwt = sign(payload, process.env.CLAVE_SECRETA!, {
@@ -45,6 +46,7 @@ export class AutenticacionService {
             });
 
             return jwt;
+            
         } catch(error) {
             console.log(error);
             throw new UnauthorizedException();
@@ -67,26 +69,31 @@ export class AutenticacionService {
                 usuarioEncontrado.password
             );
 
+            if(!usuarioEncontrado.activo) {
+                throw new UnauthorizedException('Usuario deshabilitado');
+            }
+
             if(!contraseñaValida){
                 throw new Error();
             }
 
-            const payload = {
+            const payload = { //contenido del token
                 email: usuarioEncontrado.email,
                 _id: usuarioEncontrado._id,
-            }
+                perfil: usuarioEncontrado.perfil, // agregás esto
+            };
 
             const jwt = sign(payload, process.env.CLAVE_SECRETA!, {
                 algorithm: "HS256",
                 audience: "ingreso",
                 expiresIn: DURACION_TOKEN,
+                
             })
 
             return jwt;
 
-        } catch {
-            // CASO DE ERROR: status: 401 -> unauthorized
-            throw new UnauthorizedException();
+        } catch(error) {
+            throw error;
         }
     } 
 
@@ -113,10 +120,11 @@ export class AutenticacionService {
         try {
             const verificado = verify(token, process.env.CLAVE_SECRETA!) as any;
             
-            const payload = {
-                email: verificado.email,
-                _id: verificado._id,
-            };
+        const payload = {
+            email: verificado.email,
+            _id: verificado._id,
+            perfil: verificado.perfil, // agregás esto
+        };
 
             const nuevoToken = sign(payload, process.env.CLAVE_SECRETA!, {
                 algorithm: 'HS256',
