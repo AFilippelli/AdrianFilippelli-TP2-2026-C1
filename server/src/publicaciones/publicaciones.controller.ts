@@ -1,9 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Query, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { PublicacionesService } from './publicaciones.service';
 import { Publicacion } from './entities/publicacion.schema';
 import { PublicacionDTO } from './dto/publicacion.dto';
 import { TokenGuard } from 'src/guards/token.guard';
 import { TokenDTO } from 'src/usuarios/dto/usuario.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 
 @Controller('publicaciones')
 export class PublicacionesController {
@@ -12,17 +14,32 @@ export class PublicacionesController {
     
     @Post("/")
     @UseGuards(TokenGuard)
+    @UseInterceptors(FileInterceptor('imagen', {
+        storage: diskStorage({
+            destination: './uploads',
+            filename: (req, file, cb) => {
+                const nombreUnico = Date.now() + '-' + file.originalname;
+                cb(null, nombreUnico);
+            }
+        })
+    }))
     crearPublicacion(
         @Body() publicacion: PublicacionDTO,
-        @Body("_idDelToken") _id: string
-    ){
-        return this.publicacionesService.crear(publicacion, _id);
+        @Body("_idDelToken") _id: string,
+        @UploadedFile() imagen: Express.Multer.File
+    ) {
+        return this.publicacionesService.crear(publicacion, _id, imagen);
     }
 
     @Get("/")
     @UseGuards(TokenGuard)
-    ListarPublicaciones(){
-        return this.publicacionesService.listar();
+    listarPublicaciones(
+        @Body() _tokenData: TokenDTO,
+        @Query('orden') orden: string = 'fecha',
+        @Query('limit') limit: number = 5, //limite de publicaciones vistas
+        @Query('offset') offset: number = 0,
+    ) {
+        return this.publicacionesService.listar(orden, Number(limit), Number(offset));
     }
 
     @Delete("/:id")

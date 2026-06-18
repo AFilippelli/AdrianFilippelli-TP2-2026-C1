@@ -12,29 +12,36 @@ export class PublicacionesService {
         @InjectModel(Publicacion.name) private publicacionModel: Model<Publicacion>,
     ) {}
 
-    async crear(publicacion: PublicacionDTO, usuarioId: string){
-
+    async crear(publicacion: PublicacionDTO, usuarioId: string, imagen?: Express.Multer.File){
         try{
+            const urlImagen = imagen ? `http://localhost:3000/uploads/${imagen.filename}` : null;
             
             const publicacionCreada = await this.publicacionModel.create({
                 ...publicacion,
                 usuario_publicacion: usuarioId,
+                imagen: urlImagen,
             });
 
             return publicacionCreada;
-
         } catch{
             throw new UnauthorizedException();
         }
     }
 
-    async listar(){
-
-        try{
-            const publicacionActiva = await this.publicacionModel.find({activa:true});
-
-            return publicacionActiva;
-        }catch{
+    async listar(orden: string, limit: number = 5, offset: number = 0) {
+        try {
+            const ordenamiento: Record<string, 1 | -1> = orden === 'me_gusta' 
+                ? { me_gusta: -1 } 
+                : { _id: -1 };
+                
+            const publicaciones = await this.publicacionModel
+                .find({ activa: true })
+                .sort(ordenamiento)
+                .limit(limit)
+                .skip(offset);
+                
+            return publicaciones;
+        } catch {
             throw new UnauthorizedException();
         }
     }

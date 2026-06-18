@@ -2,7 +2,6 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { PublicacionesService } from '../../services/publicaciones.service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-publicaciones',
@@ -13,27 +12,46 @@ import { DatePipe } from '@angular/common';
 export class Publicaciones implements OnInit {
 
   publicacionesService = inject(PublicacionesService);
-
-  publicaciones = signal<any[]>([]);
-
-  nuevoTitulo = '';
-  nuevoMensaje = '';
-
   router = inject(Router);
 
-  verPublicacion(id: string) {
-      this.router.navigateByUrl(`/publicacion/${id}`);
+  publicaciones = signal<any[]>([]);
+  nuevoTitulo = '';
+  nuevoMensaje = '';
+  orden = 'fecha';
+  offset = 0;
+  hayMas = signal(true);
+
+  imagenSeleccionada: File | null = null;
+
+  ngOnInit(){
+    this.cargarPublicaciones();
   }
 
-    ngOnInit(){
-      this.publicacionesService.listar().subscribe({
+  cargarPublicaciones() {
+      this.offset = 0;
+      this.publicacionesService.listar(this.orden, this.offset).subscribe({
           next: (respuesta: any) => {
               this.publicaciones.set(respuesta);
+              this.hayMas.set(respuesta.length === 5);
           },
-          error: (error) => {
-              console.log(error);
-          }
+          error: (error) => console.log(error)
       });
+  }
+
+  verMas() {
+      this.offset += 5;
+      this.publicacionesService.listar(this.orden, this.offset).subscribe({
+          next: (respuesta: any) => {
+              this.publicaciones.update(anterior => [...anterior, ...respuesta]);
+              this.hayMas.set(respuesta.length === 5);
+          },
+          error: (error) => console.log(error)
+      });
+  }
+
+  cambiarOrden(nuevoOrden: string) {
+    this.orden = nuevoOrden;
+    this.cargarPublicaciones();
   }
 
   crear(){
@@ -44,54 +62,54 @@ export class Publicaciones implements OnInit {
           mensaje: this.nuevoMensaje
       };
 
-      this.publicacionesService.crear(publicacion).subscribe({
+      this.publicacionesService.crear(publicacion, this.imagenSeleccionada ?? undefined).subscribe({
           next: (respuesta) => {
               console.log(respuesta);
               this.nuevoTitulo = '';
               this.nuevoMensaje = '';
-              this.ngOnInit();
+              this.imagenSeleccionada = null;
+              this.cargarPublicaciones();
           },
-          error: (error) => {
-              console.log(error);
-          }
+          error: (error) => console.log(error)
       });
   }
-
+  
   darMeGusta(id: string){
-      this.publicacionesService.darMeGusta(id).subscribe({
-          next: (respuesta) => {
-              console.log(respuesta);
-              this.ngOnInit();
-          },
-          error: (error) => {
-              console.log(error);
-          }
-      });
+    this.publicacionesService.darMeGusta(id).subscribe({
+      next: (respuesta) => {
+        console.log(respuesta);
+        this.cargarPublicaciones();
+      },
+      error: (error) => console.log(error)
+    });
   }
 
   quitarMeGusta(id: string){
-      this.publicacionesService.quitarMeGusta(id).subscribe({
-          next: (respuesta) => {
-              console.log(respuesta);
-              this.ngOnInit();
-          },
-          error: (error) => {
-              console.log(error);
-          }
-      });
+    this.publicacionesService.quitarMeGusta(id).subscribe({
+      next: (respuesta) => {
+        console.log(respuesta);
+        this.cargarPublicaciones();
+      },
+      error: (error) => console.log(error)
+    });
   }
 
   eliminar(id: string){
-      this.publicacionesService.eliminar(id).subscribe({
-          next: (respuesta) => {
-              console.log(respuesta);
-              this.ngOnInit();
-          },
-          error: (error) => {
-              console.log(error);
-          }
-      });
+    this.publicacionesService.eliminar(id).subscribe({
+      next: (respuesta) => {
+        console.log(respuesta);
+        this.cargarPublicaciones();
+      },
+      error: (error) => console.log(error)
+    });
   }
 
+  verPublicacion(id: string) {
+    this.router.navigateByUrl(`/publicacion/${id}`);
+  }
+
+  onImagenSeleccionada(event: any) {
+      this.imagenSeleccionada = event.target.files[0];
+  }
 
 }

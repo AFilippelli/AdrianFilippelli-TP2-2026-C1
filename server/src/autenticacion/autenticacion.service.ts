@@ -6,7 +6,7 @@ import { Usuario } from 'src/usuarios/entities/usuario.schema';
 import { sign, verify } from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
 
-
+const DURACION_TOKEN = "15 minutes";
 
 @Injectable()
 export class AutenticacionService {
@@ -16,6 +16,7 @@ export class AutenticacionService {
     @InjectModel(Usuario.name) private usuarioModel: Model<Usuario>,
     ) {}
 
+    
     async registrar(usuario: UsuarioRegistroDTO, foto: Express.Multer.File){
         /*Tomar los datos que lleguen, crear o verificar
         que los datos sean validos
@@ -40,7 +41,7 @@ export class AutenticacionService {
             const jwt = sign(payload, process.env.CLAVE_SECRETA!, {
                 algorithm: 'HS256',
                 audience: 'registro',
-                expiresIn: "15 minutes",
+                expiresIn: DURACION_TOKEN,
             });
 
             return jwt;
@@ -78,7 +79,7 @@ export class AutenticacionService {
             const jwt = sign(payload, process.env.CLAVE_SECRETA!, {
                 algorithm: "HS256",
                 audience: "ingreso",
-                expiresIn: "15 minutes",
+                expiresIn: DURACION_TOKEN,
             })
 
             return jwt;
@@ -119,7 +120,7 @@ export class AutenticacionService {
 
             const nuevoToken = sign(payload, process.env.CLAVE_SECRETA!, {
                 algorithm: 'HS256',
-                expiresIn: '15 minutes',
+                expiresIn: DURACION_TOKEN,
             });
 
             return nuevoToken;

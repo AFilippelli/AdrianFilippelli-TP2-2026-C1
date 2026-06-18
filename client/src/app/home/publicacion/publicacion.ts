@@ -1,5 +1,5 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PublicacionesService } from '../../services/publicaciones.service';
 import { ComentariosService } from '../../services/comentarios.service';
 import { FormsModule } from '@angular/forms';
@@ -13,6 +13,7 @@ import { DatePipe } from '@angular/common';
 })
 export class Publicacion implements OnInit {
 
+  router = inject(Router);
   route = inject(ActivatedRoute); //id de la url
   publicacionesService = inject(PublicacionesService);
   comentariosService = inject(ComentariosService);

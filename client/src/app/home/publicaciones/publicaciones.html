@@ -3,6 +3,7 @@
     <div class="crearPublicacion">
         <input [(ngModel)]="nuevoTitulo" placeholder="Título" />
         <textarea [(ngModel)]="nuevoMensaje" placeholder="Mensaje"></textarea>
+        <input type="file" (change)="onImagenSeleccionada($event)" />
         <button (click)="crear()">Publicar</button>
     </div>
 
@@ -11,6 +12,9 @@
             <div class="publicacion">
                 <h2>{{ elemento.titulo }}</h2>
                 <p>{{ elemento.mensaje }}</p>
+                @if(elemento.imagen) {
+                    <img [src]="elemento.imagen" alt="imagen de publicación" />
+                }
                 <p>Me gustas: {{ elemento.me_gusta.length }}</p>
                 <button (click)="darMeGusta(elemento._id)">Me gusta</button>
                 <button (click)="quitarMeGusta(elemento._id)">Quitar me gusta</button>
@@ -18,5 +22,14 @@
                 <button (click)="verPublicacion(elemento._id)">Ver publicación</button>
             </div>
         }
+
+        @if(hayMas()) {
+            <button (click)="verMas()">Ver más</button>
+        }
+    </div>
+
+    <div class="ordenamiento">
+        <button (click)="cambiarOrden('fecha')">Ordenar por fecha</button>
+        <button (click)="cambiarOrden('me_gusta')">Ordenar por me gusta</button>
     </div>
 </div>

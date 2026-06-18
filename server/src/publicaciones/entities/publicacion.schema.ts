@@ -9,8 +9,8 @@ export class Publicacion{
     @Prop()
     mensaje: string;
 
-    @Prop()
-    imagen: string;
+    @Prop({ type: String, default: null })
+    imagen: string | null;
 
     @Prop({ default: []})
     me_gusta: string[];

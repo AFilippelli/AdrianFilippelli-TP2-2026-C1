@@ -10,15 +10,20 @@ export class PublicacionesService {
 
     http = inject(HttpClient);
 
-    listar(){
+    listar(orden: string = 'fecha', offset: number = 0) {
         const headers = { Authorization: `Bearer ${localStorage.getItem('token')}` };
-
-        return this.http.get("http://localhost:3000/publicaciones", {headers});
+        return this.http.get(`http://localhost:3000/publicaciones?orden=${orden}&limit=5&offset=${offset}`, { headers });
     }
 
-    crear(publicacion: any) {
+    crear(publicacion: any, imagen?: File) {
         const headers = { Authorization: `Bearer ${localStorage.getItem('token')}` };
-        return this.http.post('http://localhost:3000/publicaciones', publicacion, { headers });
+        const formData = new FormData();
+        formData.append('titulo', publicacion.titulo);
+        formData.append('mensaje', publicacion.mensaje);
+        if(imagen) {
+            formData.append('imagen', imagen);
+        }
+        return this.http.post('http://localhost:3000/publicaciones', formData, { headers });
     }
 
     eliminar(id: string) {

@@ -4,6 +4,9 @@
         <div class="publicacion">
             <h2>{{ publicacion().titulo }}</h2>
             <p>{{ publicacion().mensaje }}</p>
+            @if(publicacion().imagen) {
+                <img [src]="publicacion().imagen" alt="imagen de publicación" />
+            }
             <p>Me gustas: {{ publicacion().me_gusta.length }}</p>
         </div>
     }
@@ -34,4 +37,5 @@
         }
     </div>
 
+    <button (click)="router.navigateByUrl('/publicaciones')">Volver</button>
 </div>
