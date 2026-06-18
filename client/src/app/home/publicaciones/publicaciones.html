@@ -18,7 +18,9 @@
                 <p>Me gustas: {{ elemento.me_gusta.length }}</p>
                 <button (click)="darMeGusta(elemento._id)">Me gusta</button>
                 <button (click)="quitarMeGusta(elemento._id)">Quitar me gusta</button>
-                <button (click)="eliminar(elemento._id)">Eliminar</button>
+                @if(puedeEliminar(elemento)) {
+                    <button (click)="eliminar(elemento._id)">Eliminar</button>
+                }
                 <button (click)="verPublicacion(elemento._id)">Ver publicación</button>
             </div>
         }

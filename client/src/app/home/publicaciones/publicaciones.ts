@@ -23,6 +23,8 @@ export class Publicaciones implements OnInit {
 
   imagenSeleccionada: File | null = null;
 
+  usuarioActual: any = JSON.parse(localStorage.getItem('usuario') || '{}');
+
   ngOnInit(){
     this.cargarPublicaciones();
   }
@@ -102,6 +104,11 @@ export class Publicaciones implements OnInit {
       },
       error: (error) => console.log(error)
     });
+  }
+
+  puedeEliminar(publicacion: any): boolean {
+      return this.usuarioActual._id === publicacion.usuario_publicacion || 
+            this.usuarioActual.perfil === 'administrador';
   }
 
   verPublicacion(id: string) {

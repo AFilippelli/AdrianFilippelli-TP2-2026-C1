@@ -57,4 +57,11 @@ export class AuthService {
         return this.http.post('http://localhost:3000/autenticacion/refrescar', { token }, { responseType: 'text' });
     }
 
+    obtenerDatosToken() {
+        const token = localStorage.getItem('token');
+        if(!token) return null;
+        const payload = token.split('.')[1];
+        return JSON.parse(atob(payload));
+    }
+
 }

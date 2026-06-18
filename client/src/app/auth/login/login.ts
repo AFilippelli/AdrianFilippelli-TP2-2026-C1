@@ -33,6 +33,8 @@ export class Login {
               next: (respuesta) => {
                   // si salió bien, redirigir al login
                   localStorage.setItem('token', respuesta);
+                  const datos = this.authService.obtenerDatosToken();
+                  localStorage.setItem('usuario', JSON.stringify(datos));
                   this.authService.iniciarContador$.next();
                   this.router.navigateByUrl('/publicaciones');
               },

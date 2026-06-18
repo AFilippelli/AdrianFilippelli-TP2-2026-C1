@@ -36,7 +36,7 @@ export class AutenticacionService {
             const payload = { //contenido del token
                 email: usuarioCreado.email,
                 _id: usuarioCreado._id,
-                perfil: usuarioCreado.perfil, // agregás esto
+                perfil: usuarioCreado.perfil, 
             };
 
             const jwt = sign(payload, process.env.CLAVE_SECRETA!, {
@@ -80,7 +80,7 @@ export class AutenticacionService {
             const payload = { //contenido del token
                 email: usuarioEncontrado.email,
                 _id: usuarioEncontrado._id,
-                perfil: usuarioEncontrado.perfil, // agregás esto
+                perfil: usuarioEncontrado.perfil, 
             };
 
             const jwt = sign(payload, process.env.CLAVE_SECRETA!, {
@@ -123,7 +123,7 @@ export class AutenticacionService {
         const payload = {
             email: verificado.email,
             _id: verificado._id,
-            perfil: verificado.perfil, // agregás esto
+            perfil: verificado.perfil, 
         };
 
             const nuevoToken = sign(payload, process.env.CLAVE_SECRETA!, {
