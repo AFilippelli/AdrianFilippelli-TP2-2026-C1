@@ -1,5 +1,9 @@
 <div class="publicaciones">
 
+    <div class="navAcciones">
+        <button (click)="irAMiPerfil()">Mi perfil</button>
+    </div>
+
     <div class="crearPublicacion">
         <input [(ngModel)]="nuevoTitulo" placeholder="Título" />
         <textarea [(ngModel)]="nuevoMensaje" placeholder="Mensaje"></textarea>
@@ -35,3 +39,4 @@
         <button (click)="cambiarOrden('me_gusta')">Ordenar por me gusta</button>
     </div>
 </div>
+

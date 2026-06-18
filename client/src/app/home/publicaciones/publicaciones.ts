@@ -115,6 +115,10 @@ export class Publicaciones implements OnInit {
     this.router.navigateByUrl(`/publicacion/${id}`);
   }
 
+  irAMiPerfil() {
+    this.router.navigateByUrl('/mi-perfil');
+  }
+
   onImagenSeleccionada(event: any) {
       this.imagenSeleccionada = event.target.files[0];
   }
