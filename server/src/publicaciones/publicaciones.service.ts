@@ -14,7 +14,7 @@ export class PublicacionesService {
 
     async crear(publicacion: PublicacionDTO, usuarioId: string, imagen?: Express.Multer.File){
         try{
-            const urlImagen = imagen ? `http://localhost:3000/uploads/${imagen.filename}` : null;
+            const urlImagen = imagen ? `${process.env.BACKEND_URL}/uploads/${imagen.filename}` : null;
             
             const publicacionCreada = await this.publicacionModel.create({
                 ...publicacion,
