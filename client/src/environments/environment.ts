@@ -1,3 +1,3 @@
 export const environment = {
-    apiUrl: "adrianfilippelli-tp-front.vercel.app",
+    apiUrl: "https://adrianfilippelli-tp2-2026-c1.onrender.com",
 };
