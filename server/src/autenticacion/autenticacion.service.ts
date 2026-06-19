@@ -6,7 +6,7 @@ import { Usuario } from 'src/usuarios/entities/usuario.schema';
 import { sign, verify } from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
 
-const DURACION_TOKEN = "15 minutes";
+const DURACION_TOKEN = "2 minutes";
 
 @Injectable()
 export class AutenticacionService {
