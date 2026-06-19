@@ -1,7 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { AuthService } from '../../services/auth.service/auth.service';
 import { DatePipe } from '@angular/common';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mi-perfil',
@@ -12,7 +11,6 @@ import { Router } from '@angular/router';
 export class MiPerfil {
 
   authService = inject(AuthService);
-  router = inject(Router);
 
   datosUsuario = signal<any>(null);
 
@@ -38,7 +36,4 @@ export class MiPerfil {
       });
   }
 
-  irAPublicaciones() {
-    this.router.navigateByUrl('/publicaciones');
-  }
 }

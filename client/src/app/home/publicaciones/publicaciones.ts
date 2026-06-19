@@ -76,6 +76,7 @@ export class Publicaciones implements OnInit {
       });
   }
   
+  /*
   darMeGusta(id: string){
     this.publicacionesService.darMeGusta(id).subscribe({
       next: (respuesta) => {
@@ -84,8 +85,27 @@ export class Publicaciones implements OnInit {
       },
       error: (error) => console.log(error)
     });
+  }*/
+
+  yaDioMeGusta(publicacion: any): boolean {
+      return publicacion.me_gusta.includes(this.usuarioActual._id);
   }
 
+  toggleMeGusta(publicacion: any){
+      const accion = this.yaDioMeGusta(publicacion)
+          ? this.publicacionesService.quitarMeGusta(publicacion._id)
+          : this.publicacionesService.darMeGusta(publicacion._id);
+
+      accion.subscribe({
+          next: (respuesta) => {
+              console.log(respuesta);
+              this.cargarPublicaciones();
+          },
+          error: (error) => console.log(error)
+      });
+  }
+
+  /*
   quitarMeGusta(id: string){
     this.publicacionesService.quitarMeGusta(id).subscribe({
       next: (respuesta) => {
@@ -94,7 +114,7 @@ export class Publicaciones implements OnInit {
       },
       error: (error) => console.log(error)
     });
-  }
+  }*/
 
   eliminar(id: string){
     this.publicacionesService.eliminar(id).subscribe({
@@ -115,12 +135,11 @@ export class Publicaciones implements OnInit {
     this.router.navigateByUrl(`/publicacion/${id}`);
   }
 
-  irAMiPerfil() {
-    this.router.navigateByUrl('/mi-perfil');
-  }
 
   onImagenSeleccionada(event: any) {
       this.imagenSeleccionada = event.target.files[0];
   }
+
+
 
 }

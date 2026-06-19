@@ -1,8 +1,5 @@
 <div class="publicaciones">
 
-    <div class="navAcciones">
-        <button (click)="irAMiPerfil()">Mi perfil</button>
-    </div>
 
     <div class="crearPublicacion">
         <input [(ngModel)]="nuevoTitulo" placeholder="Título" />
@@ -20,8 +17,11 @@
                     <img [src]="elemento.imagen" alt="imagen de publicación" />
                 }
                 <p>Me gustas: {{ elemento.me_gusta.length }}</p>
-                <button (click)="darMeGusta(elemento._id)">Me gusta</button>
-                <button (click)="quitarMeGusta(elemento._id)">Quitar me gusta</button>
+                @if(yaDioMeGusta(elemento)) {
+                    <button (click)="toggleMeGusta(elemento)">Quitar me gusta</button>
+                } @else {
+                    <button (click)="toggleMeGusta(elemento)">Me gusta</button>
+                }
                 @if(puedeEliminar(elemento)) {
                     <button (click)="eliminar(elemento._id)">Eliminar</button>
                 }

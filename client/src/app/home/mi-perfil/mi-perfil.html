@@ -1,9 +1,5 @@
 <div class="mi-perfil">
 
-    <div class="navAcciones">
-        <button (click)="irAPublicaciones()">Publicaciones</button>
-    </div>
-
     @if(datosUsuario()) {
         <img [src]="datosUsuario().foto_perfil" alt="foto de perfil" />
         <h2>{{ datosUsuario().nombre }} {{ datosUsuario().apellido }}</h2>

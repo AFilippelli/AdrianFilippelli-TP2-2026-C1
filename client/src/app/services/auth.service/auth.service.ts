@@ -64,4 +64,8 @@ export class AuthService {
         return JSON.parse(atob(payload));
     }
 
+    cerrarSesion() {
+    localStorage.removeItem('token');
+    }
+
 }

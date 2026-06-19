@@ -1,10 +1,11 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AuthService } from './services/auth.service/auth.service';
+import { Nav } from './home/nav/nav';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, Nav],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -15,9 +16,12 @@ export class App implements OnInit {
   mostrarModalSesion = signal(false);
   intervaloSesion: any = null;
 
+  haySesion = signal(!!localStorage.getItem('token'));
+
   ngOnInit() {
     this.authService.iniciarContador$.subscribe(() => {
       this.iniciarContador();
+      this.haySesion.set(true);
     });
   }
 
@@ -43,8 +47,9 @@ export class App implements OnInit {
   }
 
   cerrarSesion() {
-    localStorage.removeItem('token');
+    this.authService.cerrarSesion();
     this.mostrarModalSesion.set(false);
+    this.haySesion.set(false);
     if(this.intervaloSesion) clearTimeout(this.intervaloSesion);
   }
 }
