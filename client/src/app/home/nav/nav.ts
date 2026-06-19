@@ -13,12 +13,21 @@ export class Nav {
   router = inject(Router);
   authService = inject(AuthService);
 
+  esAdministrador(): boolean {
+    const datos = this.authService.obtenerDatosToken();
+    return datos?.perfil === 'administrador';
+  }
+
   irAPublicaciones() {
     this.router.navigateByUrl('/publicaciones');
   }
 
   irAMiPerfil() {
     this.router.navigateByUrl('/mi-perfil');
+  }
+
+  irAUsuarios() {
+    this.router.navigateByUrl('/dashboard/usuarios');
   }
 
   salir() {

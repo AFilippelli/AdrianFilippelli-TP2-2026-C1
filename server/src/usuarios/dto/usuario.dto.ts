@@ -39,6 +39,14 @@ export class UsuarioRegistroDTO{
     @IsString()
     @IsOptional()
     perfil: string;
+
+    @IsString()
+    @IsOptional()
+    emailDelToken: string;
+
+    @IsString()
+    @IsOptional()
+    _idDelToken: string;
 }
 
 export class UsuarioLoginDTO{

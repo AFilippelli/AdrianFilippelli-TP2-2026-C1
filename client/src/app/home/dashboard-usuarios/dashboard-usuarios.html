@@ -1,0 +1,180 @@
+<div class="dashboard-usuarios">
+
+    <div class="encabezado">
+        <h2>Usuarios</h2>
+        @if(!mostrarFormulario()) {
+            <button (click)="abrirFormulario()">Crear usuario</button>
+        }
+    </div>
+
+    @if(mostrarFormulario()) {
+        <form [formGroup]="formulario" class="formulario-usuario">
+            <div>
+                <label for="nombre">Nombre</label>
+                <input name="nombre" id="nombre" formControlName="nombre" placeholder="nombre"
+                  [className]="formulario.get('nombre')?.errors !== null &&
+                  formulario.get('nombre')?.touched ? 'error' : ''" 
+                />
+                @if (formulario.get('nombre')?.errors) {
+                    @if(formulario.get("nombre")?.getError('maxlength'); as MAXLENGTH) {
+                      <small class="small-error">El largo máximo es de {{ MAXLENGTH.requiredLength }}</small>
+                    }
+                    @if(formulario.get("nombre")?.getError('minlength'); as MINLENGTH) {
+                      <small class="small-error">El largo mínimo es de {{ MINLENGTH.requiredLength }}</small>
+                    }
+                }
+            </div>
+            <div>
+                <label for="apellido">Apellido</label>
+                <input name="apellido" id="apellido" formControlName="apellido" placeholder="apellido"
+                  [className]="formulario.get('apellido')?.errors !== null &&
+                  formulario.get('apellido')?.touched ? 'error' : ''" 
+                />
+                @if (formulario.get('apellido')?.errors) {
+                    @if(formulario.get("apellido")?.getError('maxlength'); as MAXLENGTH) {
+                      <small class="small-error">El largo máximo es de {{ MAXLENGTH.requiredLength }}</small>
+                    }
+                    @if(formulario.get("apellido")?.getError('minlength'); as MINLENGTH) {
+                      <small class="small-error">El largo mínimo es de {{ MINLENGTH.requiredLength }}</small>
+                    }
+                }
+            </div>
+            <div>
+                <label for="email">Email</label>
+                <input name="email" id="email" type="email" formControlName="email" placeholder="email"
+                [className]="formulario.get('email')?.errors !== null &&
+                  formulario.get('email')?.touched ? 'error' : ''" 
+                />
+                @if (formulario.get('email')?.errors && formulario.get('email')?.touched) {
+                    @if(formulario.get("email")?.getError('email')) {
+                      <small class="small-error">El email no es válido</small>
+                    }
+                }
+            </div>
+            <div>
+                <label for="nombre_de_usuario">Nombre de usuario</label>
+                <input name="nombre_de_usuario" id="nombre_de_usuario" formControlName="nombre_de_usuario" placeholder="nombre de usuario"
+                  [className]="formulario.get('nombre_de_usuario')?.errors !== null &&
+                  formulario.get('nombre_de_usuario')?.touched ? 'error' : ''" 
+                />
+                @if (formulario.get('nombre_de_usuario')?.errors) {
+                    @if(formulario.get("nombre_de_usuario")?.getError('maxlength'); as MAXLENGTH) {
+                      <small class="small-error">El largo máximo es de {{ MAXLENGTH.requiredLength }}</small>
+                    }
+                    @if(formulario.get("nombre_de_usuario")?.getError('minlength'); as MINLENGTH) {
+                      <small class="small-error">El largo mínimo es de {{ MINLENGTH.requiredLength }}</small>
+                    }
+                }
+            </div>
+
+            <div>
+                <label for="password">Contraseña</label>
+                <input name="password" id="password" type="password" formControlName="password" placeholder="password"
+                  [className]="formulario.get('password')?.errors !== null &&
+                  formulario.get('password')?.touched ? 'error' : ''" 
+                />
+                @if (formulario.get('password')?.errors && formulario.get('password')?.touched) {
+                    @if(formulario.get("password")?.getError('pattern')) {
+                      <small class="small-error">La contraseña debe tener al menos 8 caracteres, una mayúscula y un número</small>
+                    }
+                }
+            </div>
+            <div>
+                <label for="repetir_password">Repetir contraseña</label>
+                <input name="repetir_password" id="repetir_password" type="password" 
+                  formControlName="repetir_password" placeholder="repetí la contraseña"
+                  [className]="formulario.get('repetir_password')?.errors !== null &&
+                  formulario.get('repetir_password')?.touched ? 'error' : ''" 
+                />
+                @if(formulario.errors?.['noCoinciden'] && formulario.get('repetir_password')?.touched) {
+                    <small class="small-error">Las contraseñas no coinciden</small>
+                }
+            </div>
+
+            <div>
+                <label for="fecha_nacimiento">Fecha de nacimiento</label>
+                <input name="fecha_nacimiento" id="fecha_nacimiento" type="date" formControlName="fecha_nacimiento"
+                  [className]="formulario.get('fecha_nacimiento')?.errors !== null &&
+                  formulario.get('fecha_nacimiento')?.touched ? 'error' : ''" 
+                />
+                @if (formulario.get('fecha_nacimiento')?.errors && formulario.get('fecha_nacimiento')?.touched) {
+                    @if(formulario.get("fecha_nacimiento")?.getError('required')) {
+                      <small class="small-error">La fecha de nacimiento es requerida</small>
+                    }
+                }
+            </div>
+
+            <div>
+                <label for="descripcion_breve">Descripción breve</label>
+                <textarea name="descripcion_breve" id="descripcion_breve" formControlName="descripcion_breve" placeholder="contate algo"
+                  [className]="formulario.get('descripcion_breve')?.errors !== null &&
+                  formulario.get('descripcion_breve')?.touched ? 'error' : ''" 
+                ></textarea>
+                @if (formulario.get('descripcion_breve')?.errors && formulario.get('descripcion_breve')?.touched) {
+                    @if(formulario.get("descripcion_breve")?.getError('maxlength'); as MAXLENGTH) {
+                      <small class="small-error">El largo máximo es de {{ MAXLENGTH.requiredLength }}</small>
+                    }
+                }
+            </div>
+
+            <div class="radio-perfil">
+                <label>Perfil</label>
+                <label class="radio-opcion">
+                    <input type="radio" name="perfil" value="usuario" formControlName="perfil" />
+                    Usuario
+                </label>
+                <label class="radio-opcion">
+                    <input type="radio" name="perfil" value="administrador" formControlName="perfil" />
+                    Administrador
+                </label>
+            </div>
+
+            <div class="acciones-formulario">
+                <button type="button" [disabled]="!formulario.valid" (click)="crearUsuario()">Crear</button>
+                <button type="button" (click)="cerrarFormulario()">Cancelar</button>
+            </div>
+        </form>
+    }
+
+    <table class="tabla-usuarios">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Usuario</th>
+                <th>Email</th>
+                <th>Perfil</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(usuario of usuarios(); track usuario._id) {
+                <tr>
+                    <td>{{ usuario.nombre }} {{ usuario.apellido }}</td>
+                    <td>{{ usuario.nombre_de_usuario }}</td>
+                    <td>{{ usuario.email }}</td>
+                    <td>{{ usuario.perfil }}</td>
+                    <td>{{ usuario.activo ? 'Habilitado' : 'Deshabilitado' }}</td>
+                    <td>
+                        @if(usuario.activo) {
+                            <button (click)="deshabilitar(usuario._id)">Deshabilitar</button>
+                        } @else {
+                            <button (click)="habilitar(usuario._id)">Habilitar</button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if(mostrarModal()) {
+      <div class="modal-fondo">
+        <div class="modal">
+          <h2>Error al crear usuario</h2>
+          <p>{{ mensajeError() }}</p>
+          <button (click)="cerrarModal()">Cerrar</button>
+        </div>
+      </div>
+    }
+
+</div>
