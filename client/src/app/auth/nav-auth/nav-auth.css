@@ -1,0 +1,20 @@
+.nav-auth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 16px;
+}
+
+.nav-auth button {
+  background-color: var(--surface-dark);
+  color: var(--text);
+  font-size: 14px;
+}
+
+.nav-auth button:hover {
+  background-color: var(--accent);
+  color: var(--white);
+}

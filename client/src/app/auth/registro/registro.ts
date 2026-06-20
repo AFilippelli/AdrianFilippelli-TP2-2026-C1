@@ -1,12 +1,12 @@
 import { Component, inject, signal } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IRegistro } from '../auth.interfaces';
 import { AuthService } from '../../services/auth.service/auth.service';
 import { Router } from '@angular/router';
+import { NavAuth } from "../nav-auth/nav-auth";
 
 @Component({
   selector: 'app-registro',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NavAuth],
   templateUrl: './registro.html',
   styleUrl: './registro.css',
 })

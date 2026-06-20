@@ -3,10 +3,12 @@ import { AuthService } from '../../services/auth.service/auth.service';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ILogin } from '../auth.interfaces';
+import { NavAuth } from "../nav-auth/nav-auth";
+
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NavAuth],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
