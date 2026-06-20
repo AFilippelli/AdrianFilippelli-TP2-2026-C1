@@ -1,11 +1,18 @@
 import { Body, Controller, Delete, Get, Param, Post, Query, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { PublicacionesService } from './publicaciones.service';
-import { Publicacion } from './entities/publicacion.schema';
 import { PublicacionDTO } from './dto/publicacion.dto';
 import { TokenGuard } from 'src/guards/token.guard';
 import { TokenDTO } from 'src/usuarios/dto/usuario.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
+import { cloudinary } from 'src/cloudinary.config';
+import { CloudinaryStorage } from 'multer-storage-cloudinary';
+
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+        folder: 'tp2-publicaciones',
+    } as any,
+});
 
 @Controller('publicaciones')
 export class PublicacionesController {
@@ -14,15 +21,7 @@ export class PublicacionesController {
     
     @Post("/")
     @UseGuards(TokenGuard)
-    @UseInterceptors(FileInterceptor('imagen', {
-        storage: diskStorage({
-            destination: './uploads',
-            filename: (req, file, cb) => {
-                const nombreUnico = Date.now() + '-' + file.originalname;
-                cb(null, nombreUnico);
-            }
-        })
-    }))
+    @UseInterceptors(FileInterceptor('imagen', { storage }))
     crearPublicacion(
         @Body() publicacion: PublicacionDTO,
         @Body("_idDelToken") _id: string,
@@ -36,7 +35,7 @@ export class PublicacionesController {
     listarPublicaciones(
         @Body() _tokenData: TokenDTO,
         @Query('orden') orden: string = 'fecha',
-        @Query('limit') limit: number = 5, //limite de publicaciones vistas
+        @Query('limit') limit: number = 5,
         @Query('offset') offset: number = 0,
     ) {
         return this.publicacionesService.listar(orden, Number(limit), Number(offset));
@@ -53,7 +52,7 @@ export class PublicacionesController {
     
     @Post("/:id/me-gusta")
     @UseGuards(TokenGuard)
-    DarMeGusta(
+    darMeGusta(
         @Param('id') id: string,
         @Body("_idDelToken") _idUsuario: string
     ){
@@ -83,5 +82,4 @@ export class PublicacionesController {
     ) {
         return this.publicacionesService.traerPorId(id);
     }
-    
 }

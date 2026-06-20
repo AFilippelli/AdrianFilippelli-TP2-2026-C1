@@ -25,7 +25,7 @@ export class AutenticacionService {
         Error: Status 401 -> unauthorized*/
         try {
             const contraseñaEncriptada = await bcrypt.hash(usuario.password, 10);
-            const urlFoto = foto ? `${process.env.BACKEND_URL}/uploads/${foto.filename}` : null;
+            const urlFoto = foto ? foto.path : null;
 
             const usuarioCreado = await this.usuarioModel.create({
                 ...usuario,
