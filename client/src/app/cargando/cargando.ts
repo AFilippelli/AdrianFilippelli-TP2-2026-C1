@@ -15,15 +15,15 @@ export class Cargando {
   router = inject(Router);
 
   ngOnInit(){
-    this.authService.autorizar().subscribe({
-        next: (respuesta: any) => {
-            this.router.navigateByUrl('/publicaciones');
-        },
-        error: (error) => {
-            this.router.navigateByUrl('/login');
-        }
-    });
-
+      this.authService.autorizar().subscribe({
+          next: (respuesta: any) => {
+              this.authService.iniciarContador$.next(); // arranca el contador
+              this.router.navigateByUrl('/publicaciones');
+          },
+          error: (error) => {
+              this.router.navigateByUrl('/login');
+          }
+      });
   }
 
 }

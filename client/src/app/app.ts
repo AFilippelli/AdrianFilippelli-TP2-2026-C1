@@ -30,7 +30,7 @@ export class App implements OnInit {
     
     this.intervaloSesion = setTimeout(() => {
       this.mostrarModalSesion.set(true);
-    }, 10 * 60 * 1000); // 10 minutos
+    }, 1 * 60 * 1000); // 10 minutos
   }
 
   extenderSesion() {
