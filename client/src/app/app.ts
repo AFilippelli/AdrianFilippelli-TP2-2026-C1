@@ -20,7 +20,7 @@ export class App implements OnInit {
 
   mostrarModalSesion = signal(false);
   intervaloSesion: any = null;
-      // avisar 1 minuto antes
+  intervaloVencimiento: any = null;
 
   haySesion = signal(!!localStorage.getItem('token'));
 
@@ -32,17 +32,18 @@ export class App implements OnInit {
   }
 
   iniciarContador() {
-    if(this.intervaloSesion) clearTimeout(this.intervaloSesion);
-    
-    this.intervaloSesion = setTimeout(() => {
-      this.mostrarModalSesion.set(true);
-    }, DURACION_TOKEN_MS - AVISO_ANTES_MS);
+      if(this.intervaloSesion) clearTimeout(this.intervaloSesion);
+      if(this.intervaloVencimiento) clearTimeout(this.intervaloVencimiento);
+      
+      this.intervaloSesion = setTimeout(() => {
+          this.mostrarModalSesion.set(true);
+      }, DURACION_TOKEN_MS - AVISO_ANTES_MS);
 
-      setTimeout(() => {
-        if(this.mostrarModalSesion()) {
-            this.cerrarSesion();
-        }
-    }, DURACION_TOKEN_MS);
+      this.intervaloVencimiento = setTimeout(() => {
+          if(this.mostrarModalSesion()) {
+              this.cerrarSesion();
+          }
+      }, DURACION_TOKEN_MS);
   }
 
   extenderSesion() {
@@ -63,8 +64,15 @@ export class App implements OnInit {
       localStorage.removeItem('usuario');
       this.mostrarModalSesion.set(false);
       if(this.intervaloSesion) clearTimeout(this.intervaloSesion);
+      if(this.intervaloVencimiento) clearTimeout(this.intervaloVencimiento);
       this.haySesion.set(false);  
       this.router.navigateByUrl('/login');
   }
-  
+
+  estaEnAuth(): boolean {
+      const url = this.router.url;
+      return url.includes('/login') || url.includes('/registro');
+  }
+
+
 }
