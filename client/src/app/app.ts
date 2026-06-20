@@ -36,7 +36,7 @@ export class App implements OnInit {
     
     this.intervaloSesion = setTimeout(() => {
       this.mostrarModalSesion.set(true);
-    }, DURACION_TOKEN_MS);
+    }, DURACION_TOKEN_MS - AVISO_ANTES_MS);
 
       setTimeout(() => {
         if(this.mostrarModalSesion()) {
