@@ -63,6 +63,8 @@ export class App implements OnInit {
       localStorage.removeItem('usuario');
       this.mostrarModalSesion.set(false);
       if(this.intervaloSesion) clearTimeout(this.intervaloSesion);
+      this.haySesion.set(false);  
       this.router.navigateByUrl('/login');
   }
+  
 }
