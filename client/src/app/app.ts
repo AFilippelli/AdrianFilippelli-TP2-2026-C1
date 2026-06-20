@@ -5,7 +5,7 @@ import { Nav } from './home/nav/nav';
 
 
 const DURACION_TOKEN_MS = 2 * 60 * 1000;    // 2 minutos en milisegundos
-const AVISO_ANTES_MS = 1 * 60 * 1000;  
+const AVISO_ANTES_MS = 1 * 60 * 1000;       // avisar 1 minuto antes
 
 @Component({
   selector: 'app-root',
