@@ -1,7 +1,11 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { AuthService } from './services/auth.service/auth.service';
 import { Nav } from './home/nav/nav';
+
+
+const DURACION_TOKEN_MS = 2 * 60 * 1000;    // 2 minutos en milisegundos
+const AVISO_ANTES_MS = 1 * 60 * 1000;  
 
 @Component({
   selector: 'app-root',
@@ -11,10 +15,12 @@ import { Nav } from './home/nav/nav';
 })
 export class App implements OnInit {
 
+  router = inject(Router);
   authService = inject(AuthService);
 
   mostrarModalSesion = signal(false);
   intervaloSesion: any = null;
+      // avisar 1 minuto antes
 
   haySesion = signal(!!localStorage.getItem('token'));
 
@@ -30,7 +36,13 @@ export class App implements OnInit {
     
     this.intervaloSesion = setTimeout(() => {
       this.mostrarModalSesion.set(true);
-    }, 1 * 60 * 1000); // 10 minutos
+    }, DURACION_TOKEN_MS);
+
+      setTimeout(() => {
+        if(this.mostrarModalSesion()) {
+            this.cerrarSesion();
+        }
+    }, DURACION_TOKEN_MS);
   }
 
   extenderSesion() {
@@ -47,9 +59,10 @@ export class App implements OnInit {
   }
 
   cerrarSesion() {
-    this.authService.cerrarSesion();
-    this.mostrarModalSesion.set(false);
-    this.haySesion.set(false);
-    if(this.intervaloSesion) clearTimeout(this.intervaloSesion);
+      localStorage.removeItem('token');
+      localStorage.removeItem('usuario');
+      this.mostrarModalSesion.set(false);
+      if(this.intervaloSesion) clearTimeout(this.intervaloSesion);
+      this.router.navigateByUrl('/login');
   }
 }
