@@ -25,10 +25,16 @@ export class App implements OnInit {
   haySesion = signal(!!localStorage.getItem('token'));
 
   ngOnInit() {
-    this.authService.iniciarContador$.subscribe(() => {
-      this.iniciarContador();
-      this.haySesion.set(true);
-    });
+      this.authService.iniciarContador$.subscribe(() => {
+          this.iniciarContador();
+          this.haySesion.set(true);
+      });
+
+      this.authService.cerrarSesion$.subscribe(() => {
+          this.haySesion.set(false);
+          if(this.intervaloSesion) clearTimeout(this.intervaloSesion);
+          if(this.intervaloVencimiento) clearTimeout(this.intervaloVencimiento);
+      });
   }
 
   iniciarContador() {

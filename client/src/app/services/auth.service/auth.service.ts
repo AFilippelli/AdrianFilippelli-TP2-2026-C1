@@ -16,6 +16,8 @@ export class AuthService {
 
     iniciarContador$ = new Subject<void>();
 
+    cerrarSesion$ = new Subject<void>();
+
     registrar(datos: any, foto?: File) {
         const formData = new FormData();
         

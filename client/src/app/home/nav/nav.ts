@@ -31,7 +31,8 @@ export class Nav {
   }
 
   salir() {
-    this.authService.cerrarSesion();
-    this.router.navigateByUrl('/login');
+      this.authService.cerrarSesion();
+      this.authService.cerrarSesion$.next();
+      this.router.navigateByUrl('/login');
   }
 }
