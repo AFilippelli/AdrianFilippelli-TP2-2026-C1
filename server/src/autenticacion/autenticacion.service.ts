@@ -93,7 +93,10 @@ export class AutenticacionService {
             return jwt;
 
         } catch(error) {
-            throw error;
+            if(error instanceof UnauthorizedException) {
+                throw error;
+            }
+            throw new UnauthorizedException();
         }
     } 
 
