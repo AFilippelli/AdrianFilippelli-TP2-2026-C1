@@ -31,7 +31,9 @@
                 @if(comentario.modificado) {
                     <small>(editado)</small>
                 }
-                <button (click)="editarComentario(comentario)">Editar</button>
+                @if(esMiComentario(comentario)) {
+                    <button (click)="editarComentario(comentario)">Editar</button>
+                }
             }
         </div>
         }

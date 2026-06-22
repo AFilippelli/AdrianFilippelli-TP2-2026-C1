@@ -7,54 +7,63 @@ import { ComentarioDTO } from '../dto/comentario.dto';
 @Injectable()
 export class ComentariosService {
 
-        constructor(
-            @InjectModel(Comentario.name) private comentarioModel: Model<Comentario>,
-        ) {}
+    constructor(
+        @InjectModel(Comentario.name) private comentarioModel: Model<Comentario>,
+    ) {}
 
-        async agregar(mensaje: ComentarioDTO, usuarioId: string, publicacionId: string){
+    async agregar(mensaje: ComentarioDTO, usuarioId: string, publicacionId: string){
 
-            try{
-                
-                const agregarComentario = await this.comentarioModel.create({
-                    ...mensaje,
-                    usuario: usuarioId,
-                    publicacion: publicacionId,
-                    fecha: new Date(),
-                });
+        try{
+            
+            const agregarComentario = await this.comentarioModel.create({
+                ...mensaje,
+                usuario: usuarioId,
+                publicacion: publicacionId,
+                fecha: new Date(),
+            });
 
-                return agregarComentario;
+            return agregarComentario;
 
-            } catch{
+        } catch{
+            throw new UnauthorizedException();
+        }
+
+    }
+
+    async traer(publicacionId: string){
+        try{
+            const traerComentarios = await this.comentarioModel
+            .find({publicacion: publicacionId})
+            .sort({fecha:-1})
+
+            return traerComentarios;
+
+        }catch{
+            throw new UnauthorizedException();
+        }
+    }
+
+    async modificar(comentarioId: string, nuevoMensaje: string, usuarioId: string){
+        try{
+            const comentario = await this.comentarioModel.findById(comentarioId);
+            
+            if(!comentario) {
                 throw new UnauthorizedException();
             }
 
-        }
-
-        async traer(publicacionId: string){
-            try{
-                const traerComentarios = await this.comentarioModel
-                .find({publicacion: publicacionId})
-                .sort({fecha:-1})
-
-                return traerComentarios;
-
-            }catch{
-                throw new UnauthorizedException();
+            if(comentario.usuario !== usuarioId) {
+                throw new UnauthorizedException('No podés editar este comentario');
             }
-        }
 
-        async modificar(comentarioId: string, nuevoMensaje: string){
-            try{
-                const modificarComentario = await this.comentarioModel.updateOne(
-                    {_id: comentarioId},
-                    {mensaje: nuevoMensaje, modificado: true},
-                )
+            const modificado = await this.comentarioModel.updateOne(
+                { _id: comentarioId },
+                { mensaje: nuevoMensaje, modificado: true },
+            );
 
-                return modificarComentario;
-            }
-            catch{
-                throw new UnauthorizedException();
-            }
+            return modificado;
+        } catch(error){
+            throw error;
         }
+    }
     
 }

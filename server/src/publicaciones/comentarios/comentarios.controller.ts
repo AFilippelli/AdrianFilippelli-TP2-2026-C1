@@ -33,8 +33,9 @@ export class ComentariosController {
     modificarComentario(
         @Param("comentarioId") comentarioId: string,
         @Body("mensaje") nuevoMensaje: string,
+        @Body("_idDelToken") _id: string,
     ){
-        return this.comentariosService.modificar(comentarioId, nuevoMensaje);
+        return this.comentariosService.modificar(comentarioId, nuevoMensaje, _id);
     }
 
 }

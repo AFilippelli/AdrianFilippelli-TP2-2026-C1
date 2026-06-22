@@ -21,6 +21,7 @@ export class Publicacion implements OnInit {
   publicacion = signal<any>(null);
   comentarios = signal<any[]>([]);
   comentarioEditandoId = signal<string | null>(null);
+  usuarioActual: any = JSON.parse(localStorage.getItem('usuario') || '{}');
 
 
   nuevoComentario = '';   //guarda el texto del nuevo comentario
@@ -62,6 +63,10 @@ export class Publicacion implements OnInit {
       this.mensajeEditado = comentario.mensaje;
   }
 
+  esMiComentario(comentario: any): boolean {
+      return this.usuarioActual._id === comentario.usuario;
+  }
+
   guardarEdicion() {
       const id = this.comentarioEditandoId();
       if(!id || !this.mensajeEditado) return;
@@ -80,5 +85,7 @@ export class Publicacion implements OnInit {
       this.comentarioEditandoId.set(null);
       this.mensajeEditado = '';
   }
+
+
 
 }
