@@ -41,6 +41,11 @@ export const routes: Routes = [
         loadComponent: () => import('./home/dashboard-usuarios/dashboard-usuarios').then((archivo) => archivo.DashboardUsuarios),
         canActivate: [adminGuard],
     },
+    {
+        path: "dashboard/estadisticas",
+        loadComponent: () => import('./home/dashboard-estadisticas/dashboard-estadisticas').then((archivo) => archivo.DashboardEstadisticas),
+        canActivate: [adminGuard],
+    },
 
 
     

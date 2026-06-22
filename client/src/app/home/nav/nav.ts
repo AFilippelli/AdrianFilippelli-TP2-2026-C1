@@ -30,6 +30,10 @@ export class Nav {
     this.router.navigateByUrl('/dashboard/usuarios');
   }
 
+  irAEstadisticas() {
+      this.router.navigateByUrl('/dashboard/estadisticas');
+  }
+
   salir() {
       this.authService.cerrarSesion();
       this.authService.cerrarSesion$.next();
