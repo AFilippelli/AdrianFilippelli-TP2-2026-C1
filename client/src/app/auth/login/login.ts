@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { AuthService } from '../../services/auth.service/auth.service';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -18,6 +18,9 @@ export class Login {
 
   router = inject(Router);
 
+  mostrarModal = signal(false);
+  mensajeError = signal("");
+
   formulario = new FormGroup({
       email: new FormControl("",
         [Validators.email, Validators.required]),
@@ -27,13 +30,12 @@ export class Login {
 
 
 
-    enviar(){
+  enviar(){
       if(this.formulario.invalid) return;
       
       this.authService.ingresar(this.formulario.value as ILogin)
           .subscribe({
               next: (respuesta) => {
-                  // si salió bien, redirigir al login
                   localStorage.setItem('token', respuesta);
                   const datos = this.authService.obtenerDatosToken();
                   localStorage.setItem('usuario', JSON.stringify(datos));
@@ -41,10 +43,16 @@ export class Login {
                   this.router.navigateByUrl('/publicaciones');
               },
               error: (error) => {
-                  // si hubo error, mostrar mensaje
-                  console.log(error);
+                  const mensaje = error?.error?.message;
+                  this.mensajeError.set(mensaje || 'Email o contraseña incorrectos');
+                  this.mostrarModal.set(true);
               }
           });
-    }
+  }
+
+  cerrarModal() {
+      this.mostrarModal.set(false);
+      this.mensajeError.set("");
+  }
 
 }

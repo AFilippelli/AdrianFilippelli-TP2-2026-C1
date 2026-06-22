@@ -26,6 +26,15 @@
         }
     </div>
 
-<button type="button" [disabled]="!formulario.valid" (click)="enviar()">Ingresar</button>
-
+    <button type="button" [disabled]="!formulario.valid" (click)="enviar()">Ingresar</button>
 </form>
+
+@if(mostrarModal()) {
+  <div class="modal-fondo">
+    <div class="modal">
+      <h2>Error al iniciar sesión</h2>
+      <p>{{ mensajeError() }}</p>
+      <button (click)="cerrarModal()">Cerrar</button>
+    </div>
+  </div>
+}
