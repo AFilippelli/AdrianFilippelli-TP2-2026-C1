@@ -92,7 +92,7 @@ export class DashboardEstadisticas implements OnInit {
           this.grafico3 = new Chart(this.canvas3.nativeElement, {
             type: 'pie',
             data: {
-              labels: data.map((d: any) => d._id),
+              labels: data.map((d: any) => d.titulo),
               datasets: [{
                 label: 'Comentarios por publicación',
                 data: data.map((d: any) => d.cantidad),

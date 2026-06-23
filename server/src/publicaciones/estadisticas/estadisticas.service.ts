@@ -31,9 +31,14 @@ export class EstadisticasService {
                 }
             },
             {
+                $addFields: {
+                    usuarioId: { $toObjectId: '$_id' }
+                }
+            },
+            {
                 $lookup: {
                     from: 'usuarios',
-                    localField: '_id',
+                    localField: 'usuarioId',
                     foreignField: '_id',
                     as: 'usuario'
                 }
@@ -88,6 +93,28 @@ export class EstadisticasService {
                 $group: {
                     _id: '$publicacion',
                     cantidad: { $sum: 1 }
+                }
+            },
+            {
+                $addFields: {
+                    publicacionId: { $toObjectId: '$_id' }
+                }
+            },
+            {
+                $lookup: {
+                    from: 'publicaciones',
+                    localField: 'publicacionId',
+                    foreignField: '_id',
+                    as: 'publicacion'
+                }
+            },
+            {
+                $unwind: '$publicacion'
+            },
+            {
+                $project: {
+                    titulo: '$publicacion.titulo',
+                    cantidad: 1
                 }
             },
             {
