@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Query, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Query, Req, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { PublicacionesService } from './publicaciones.service';
 import { PublicacionDTO } from './dto/publicacion.dto';
 import { TokenGuard } from 'src/guards/token.guard';
@@ -25,9 +25,11 @@ export class PublicacionesController {
     crearPublicacion(
         @Body() publicacion: PublicacionDTO,
         @Body("_idDelToken") _id: string,
-        @UploadedFile() imagen: Express.Multer.File
+        @UploadedFile() imagen: Express.Multer.File,
+        @Req() req: any
     ) {
-        return this.publicacionesService.crear(publicacion, _id, imagen);
+        const usuarioId = req.body._idDelToken || _id;
+        return this.publicacionesService.crear(publicacion, usuarioId, imagen);
     }
 
     @Get("/")
