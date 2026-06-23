@@ -96,28 +96,6 @@ export class EstadisticasService {
                 }
             },
             {
-                $addFields: {
-                    publicacionId: { $toObjectId: '$_id' }
-                }
-            },
-            {
-                $lookup: {
-                    from: 'publicaciones',
-                    localField: 'publicacionId',
-                    foreignField: '_id',
-                    as: 'publicacion'
-                }
-            },
-            {
-                $unwind: '$publicacion'
-            },
-            {
-                $project: {
-                    titulo: '$publicacion.titulo',
-                    cantidad: 1
-                }
-            },
-            {
                 $sort: { cantidad: -1 }
             }
         ]);
