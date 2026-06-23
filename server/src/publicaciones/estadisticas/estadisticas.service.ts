@@ -18,9 +18,9 @@ export class EstadisticasService {
             {
                 $match: {
                     activa: true,
-                    _id: {
-                        $gte: new mongoose.Types.ObjectId(Math.floor(fechaInicio.getTime() / 1000).toString(16) + '0000000000000000'),
-                        $lte: new mongoose.Types.ObjectId(Math.floor(fechaFin.getTime() / 1000).toString(16) + '0000000000000000'),
+                    fecha: {
+                        $gte: fechaInicio,
+                        $lte: fechaFin,
                     }
                 }
             },

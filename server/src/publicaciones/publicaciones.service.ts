@@ -16,11 +16,12 @@ export class PublicacionesService {
         try{
             const urlImagen = imagen ? imagen.path : null;
             
-            const publicacionCreada = await this.publicacionModel.create({
-                ...publicacion,
-                usuario_publicacion: usuarioId,
-                imagen: urlImagen,
-            });
+        const publicacionCreada = await this.publicacionModel.create({
+            ...publicacion,
+            usuario_publicacion: usuarioId,
+            imagen: urlImagen,
+            fecha: new Date(),
+        });
 
             return publicacionCreada;
         } catch{
