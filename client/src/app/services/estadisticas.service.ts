@@ -23,4 +23,9 @@ export class EstadisticasService {
         const headers = { Authorization: `Bearer ${localStorage.getItem('token')}` };
         return this.http.get(`${environment.apiUrl}/estadisticas/comentarios-por-publicacion?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`, { headers });
     }
+
+    traerPublicacionPorId(id: string) {
+        const headers = { Authorization: `Bearer ${localStorage.getItem('token')}` };
+        return this.http.get(`${environment.apiUrl}/publicaciones/${id}`, { headers });
+    }
 }

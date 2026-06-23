@@ -89,23 +89,29 @@ export class DashboardEstadisticas implements OnInit {
       this.estadisticasService.comentariosPorPublicacion(this.fechaInicio, this.fechaFin)
         .subscribe({
           next: (data: any) => {
-            // traer los titulos de las publicaciones
-            const labels = data.map((d: any) => {
-              const id = d._id;
-              return id.substring(0, 8) + '...'; // muestra solo los primeros 8 caracteres
-            });
+            const ids = data.map((d: any) => d._id);
+            const cantidades = data.map((d: any) => d.cantidad);
             
-            if(this.grafico3) this.grafico3.destroy();
-            this.grafico3 = new Chart(this.canvas3.nativeElement, {
-              type: 'pie',
-              data: {
-                labels: labels,
-                datasets: [{
-                  label: 'Comentarios por publicación',
-                  data: data.map((d: any) => d.cantidad),
-                  backgroundColor: ['#3d7ab5', '#8fa5b8', '#b8c9d9', '#cddae8', '#9ab0c4'],
-                }]
-              }
+            // traer los titulos de las publicaciones
+            const promesas = ids.map((id: string) => 
+              this.estadisticasService.traerPublicacionPorId(id).toPromise()
+            );
+
+            Promise.all(promesas).then((publicaciones: any[]) => {
+              const labels = publicaciones.map((p: any) => p?.titulo || 'Sin título');
+              
+              if(this.grafico3) this.grafico3.destroy();
+              this.grafico3 = new Chart(this.canvas3.nativeElement, {
+                type: 'pie',
+                data: {
+                  labels: labels,
+                  datasets: [{
+                    label: 'Comentarios por publicación',
+                    data: cantidades,
+                    backgroundColor: ['#3d7ab5', '#8fa5b8', '#b8c9d9', '#cddae8', '#9ab0c4'],
+                  }]
+                }
+              });
             });
           },
           error: (e) => console.log(e)
