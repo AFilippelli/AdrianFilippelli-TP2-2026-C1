@@ -13,6 +13,8 @@ export class PublicacionesService {
     ) {}
 
     async crear(publicacion: PublicacionDTO, usuarioId: string, imagen?: Express.Multer.File){
+        console.log('usuarioId:', usuarioId); 
+        console.log('publicacion:', publicacion);
         try{
             const urlImagen = imagen ? imagen.path : null;
             
