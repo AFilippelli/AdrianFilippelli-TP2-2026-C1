@@ -12,7 +12,7 @@ Chart.register(...registerables);
   styleUrl: './dashboard-estadisticas.css',
 })
 export class DashboardEstadisticas implements OnInit {
-
+  //.
   estadisticasService = inject(EstadisticasService);
 
   fechaInicio = '';
