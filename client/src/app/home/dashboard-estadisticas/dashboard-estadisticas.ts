@@ -49,7 +49,7 @@ export class DashboardEstadisticas implements OnInit {
           this.grafico1 = new Chart(this.canvas1.nativeElement, {
             type: 'bar',
             data: {
-              labels: data.map((d: any) => d._id),
+              labels: data.map((d: any) => d.nombre),
               datasets: [{
                 label: 'Publicaciones por usuario',
                 data: data.map((d: any) => d.cantidad),

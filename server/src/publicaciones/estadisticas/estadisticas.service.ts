@@ -29,6 +29,23 @@ export class EstadisticasService {
                     _id: '$usuario_publicacion',
                     cantidad: { $sum: 1 }
                 }
+            },
+            {
+                $lookup: {
+                    from: 'usuarios',
+                    localField: '_id',
+                    foreignField: '_id',
+                    as: 'usuario'
+                }
+            },
+            {
+                $unwind: '$usuario'
+            },
+            {
+                $project: {
+                    nombre: '$usuario.nombre_de_usuario',
+                    cantidad: 1
+                }
             }
         ]);
         return resultado;
