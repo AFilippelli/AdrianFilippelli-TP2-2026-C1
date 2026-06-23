@@ -76,6 +76,7 @@ export class EstadisticasService {
                 $sort: { _id: 1 }
             }
         ]);
+        console.log('comentariosPorPublicacion resultado:', resultado);
         return resultado;
     }
 
