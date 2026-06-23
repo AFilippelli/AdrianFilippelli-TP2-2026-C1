@@ -25,9 +25,11 @@ export class PublicacionesController {
     crearPublicacion(
         @Body() publicacion: PublicacionDTO,
         @UploadedFile() imagen: Express.Multer.File,
-        @Req() req: Request
+        @Req() req: any
     ) {
-        const usuarioId = (req as any).usuarioId;
+        const token = req.headers.authorization?.replace('Bearer ', '');
+        const payload = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
+        const usuarioId = payload._id;
         return this.publicacionesService.crear(publicacion, usuarioId, imagen);
     }
 

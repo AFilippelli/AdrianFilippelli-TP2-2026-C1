@@ -28,7 +28,6 @@ export class TokenGuard implements CanActivate{
 
       const { email, _id } = verificado as { email: string, _id: string };
 
-      // ¿Cómo le paso el email al controller?
 
       if (!req.body) {
         req.body = { email, _idDelToken: _id };
