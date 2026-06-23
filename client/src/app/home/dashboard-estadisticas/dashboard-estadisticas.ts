@@ -45,6 +45,7 @@ export class DashboardEstadisticas implements OnInit {
     this.estadisticasService.publicacionesPorUsuario(this.fechaInicio, this.fechaFin)
       .subscribe({
         next: (data: any) => {
+          console.log('grafico1 data:', data);
           if(this.grafico1) this.grafico1.destroy();
           this.grafico1 = new Chart(this.canvas1.nativeElement, {
             type: 'bar',
