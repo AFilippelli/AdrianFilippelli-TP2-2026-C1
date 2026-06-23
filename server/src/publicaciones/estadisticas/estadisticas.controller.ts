@@ -1,6 +1,7 @@
 import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { EstadisticasService } from './estadisticas.service';
 import { AdminGuard } from 'src/guards/admin.guard';
+import { TokenGuard } from 'src/guards/token.guard';
 
 @Controller('estadisticas')
 export class EstadisticasController {
@@ -8,7 +9,7 @@ export class EstadisticasController {
     constructor(private readonly estadisticasService: EstadisticasService) {}
 
     @Get('/publicaciones-por-usuario')
-    @UseGuards(AdminGuard)
+    @UseGuards(TokenGuard)
     publicacionesPorUsuario(
         @Query('fechaInicio') fechaInicio: string,
         @Query('fechaFin') fechaFin: string,
