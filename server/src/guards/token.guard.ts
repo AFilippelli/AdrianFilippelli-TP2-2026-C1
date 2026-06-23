@@ -21,8 +21,10 @@ export class TokenGuard implements CanActivate{
   const token = authorization?.replace('Bearer ', '') || '';
 
 
+
+
     try {
-      const verificado = verify(token, process.env.CLAVE_SECRETA!); // Toma el encabezado, toma el payload, toma la CLAVESUPERSECRETA. Sigue todo el paso a paso para generar la firma. Si coincide con la del tóken enviado, es válido.
+      const verificado = verify(token, process.env.CLAVE_SECRETA!) as any;// Toma el encabezado, toma el payload, toma la CLAVESUPERSECRETA. Sigue todo el paso a paso para generar la firma. Si coincide con la del tóken enviado, es válido.
 
       const { email, _id } = verificado as { email: string, _id: string };
 
@@ -33,6 +35,7 @@ export class TokenGuard implements CanActivate{
       } else {
         req.body.emailDelToken = email;
         req.body._idDelToken = _id;
+        (req as any).usuarioId = verificado._id;
       }
 
       return true;

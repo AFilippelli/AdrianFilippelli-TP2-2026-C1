@@ -24,11 +24,10 @@ export class PublicacionesController {
     @UseInterceptors(FileInterceptor('imagen', { storage }))
     crearPublicacion(
         @Body() publicacion: PublicacionDTO,
-        @Body("_idDelToken") _id: string,
         @UploadedFile() imagen: Express.Multer.File,
-        @Req() req: any
+        @Req() req: Request
     ) {
-        const usuarioId = req.body._idDelToken || _id;
+        const usuarioId = (req as any).usuarioId;
         return this.publicacionesService.crear(publicacion, usuarioId, imagen);
     }
 
