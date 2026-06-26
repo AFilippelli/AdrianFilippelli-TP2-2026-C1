@@ -3,11 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PublicacionesService } from '../../services/publicaciones.service';
 import { ComentariosService } from '../../services/comentarios.service';
 import { FormsModule } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { TiempoTranscurridoPipe } from '../../pipes/tiempo-transcurrido.pipe';
 
 @Component({
   selector: 'app-publicacion',
-  imports: [FormsModule, DatePipe],
+  imports: [FormsModule, TiempoTranscurridoPipe],
   templateUrl: './publicacion.html',
   styleUrl: './publicacion.css',
 })

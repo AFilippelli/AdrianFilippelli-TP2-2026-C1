@@ -27,7 +27,7 @@
                 <button (click)="cancelarEdicion()">Cancelar</button>
             } @else {
                 <p>{{ comentario.mensaje }}</p>
-                <small>{{ comentario.fecha | date:'dd/MM/yyyy HH:mm' }}</small>
+                <small>{{ comentario.fecha | tiempoTranscurrido }}</small>
                 @if(comentario.modificado) {
                     <small>(editado)</small>
                 }

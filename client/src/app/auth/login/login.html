@@ -3,7 +3,7 @@
 <form [formGroup]="formulario">
     <div>
         <label for="email">Email</label>
-        <input name="email" id="email" type="email" formControlName="email" placeholder="email"
+        <input name="email" id="email" type="email" formControlName="email" placeholder="email" appBordeActivo
         [className]="formulario.get('email')?.errors !== null &&
           formulario.get('email')?.touched ? 'error' : ''" 
         />
@@ -15,7 +15,7 @@
     </div>
     <div>
         <label for="password">Contraseña</label>
-        <input name="password" id="password" type="password" formControlName="password" placeholder="password"
+        <input name="password" id="password" type="password" formControlName="password" placeholder="password" appBordeActivo
           [className]="formulario.get('password')?.errors !== null &&
           formulario.get('password')?.touched ? 'error' : ''" 
         />

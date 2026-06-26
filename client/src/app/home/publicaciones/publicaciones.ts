@@ -2,10 +2,17 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { PublicacionesService } from '../../services/publicaciones.service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CapitalizarPipe } from '../../pipes/capitalizar.pipe';
+import { TruncarPipe } from '../../pipes/truncar.pipe';
+import { TiempoTranscurridoPipe } from '../../pipes/tiempo-transcurrido.pipe';
+import { ResaltarDirective } from '../../directivas/resaltar.directive';
+import { NegritaDirective } from '../../directivas/negrita.directive';
 
 @Component({
   selector: 'app-publicaciones',
-  imports: [FormsModule],
+  imports: [FormsModule, CapitalizarPipe, TruncarPipe, TiempoTranscurridoPipe,
+    ResaltarDirective, NegritaDirective
+  ],
   templateUrl: './publicaciones.html',
   styleUrl: './publicaciones.css',
 })

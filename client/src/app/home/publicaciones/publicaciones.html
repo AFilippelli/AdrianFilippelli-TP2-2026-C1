@@ -1,6 +1,5 @@
 <div class="publicaciones">
 
-
     <div class="crearPublicacion">
         <input [(ngModel)]="nuevoTitulo" placeholder="Título" />
         <textarea [(ngModel)]="nuevoMensaje" placeholder="Mensaje"></textarea>
@@ -10,12 +9,13 @@
 
     <div class="listaPublicaciones">
         @for(elemento of publicaciones(); track elemento._id) {
-            <div class="publicacion">
-                <h2>{{ elemento.titulo }}</h2>
-                <p>{{ elemento.mensaje }}</p>
+            <div class="publicacion" appResaltar>
+                <h2 appNegrita>{{ elemento.titulo | capitalizar }}</h2>
+                <p>{{ elemento.mensaje | truncar:100 }}</p>
                 @if(elemento.imagen) {
                     <img [src]="elemento.imagen" alt="imagen de publicación" />
                 }
+                <small>{{ elemento.fecha | tiempoTranscurrido }}</small>
                 <p>Me gustas: {{ elemento.me_gusta.length }}</p>
                 @if(yaDioMeGusta(elemento)) {
                     <button (click)="toggleMeGusta(elemento)">Quitar me gusta</button>
@@ -39,4 +39,3 @@
         <button (click)="cambiarOrden('me_gusta')">Ordenar por me gusta</button>
     </div>
 </div>
-

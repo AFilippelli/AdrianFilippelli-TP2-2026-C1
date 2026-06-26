@@ -2,7 +2,7 @@
 
     @if(datosUsuario()) {
         <img [src]="datosUsuario().foto_perfil" alt="foto de perfil" />
-        <h2>{{ datosUsuario().nombre }} {{ datosUsuario().apellido }}</h2>
+       <h2>{{ datosUsuario().nombre | capitalizar }} {{ datosUsuario().apellido | capitalizar }}</h2>
         <p>Usuario: {{ datosUsuario().nombre_de_usuario }}</p>
         <p>Email: {{ datosUsuario().email }}</p>
         <p>Fecha de nacimiento: {{ datosUsuario().fecha_nacimiento | date:'dd/MM/yyyy' }}</p>

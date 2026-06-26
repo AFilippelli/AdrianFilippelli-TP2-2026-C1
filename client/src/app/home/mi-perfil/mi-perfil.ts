@@ -1,10 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
 import { AuthService } from '../../services/auth.service/auth.service';
 import { DatePipe } from '@angular/common';
+import { CapitalizarPipe } from '../../pipes/capitalizar.pipe';
 
 @Component({
   selector: 'app-mi-perfil',
-  imports: [DatePipe],
+  imports: [DatePipe, CapitalizarPipe],
   templateUrl: './mi-perfil.html',
   styleUrl: './mi-perfil.css',
 })

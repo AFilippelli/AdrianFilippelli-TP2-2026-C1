@@ -3,10 +3,11 @@ import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validator
 import { AuthService } from '../../services/auth.service/auth.service';
 import { Router } from '@angular/router';
 import { NavAuth } from "../nav-auth/nav-auth";
+import { BorderActivoDirective } from '../../directivas/borde-activo.directive';
 
 @Component({
   selector: 'app-registro',
-  imports: [ReactiveFormsModule, NavAuth],
+  imports: [ReactiveFormsModule, NavAuth, BorderActivoDirective],
   templateUrl: './registro.html',
   styleUrl: './registro.css',
 })

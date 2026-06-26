@@ -4,11 +4,12 @@ import { Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ILogin } from '../auth.interfaces';
 import { NavAuth } from "../nav-auth/nav-auth";
+import { BorderActivoDirective } from '../../directivas/borde-activo.directive';
 
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, NavAuth],
+  imports: [ReactiveFormsModule, NavAuth, BorderActivoDirective],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
